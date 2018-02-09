@@ -6,7 +6,7 @@ SI-T1a
 
 ## Laboratoire 2
 
-LABO : Configuration de IIS
+LABO : Mise en place d'un service Internet et Intranet
 
 ## Exercice 1
 

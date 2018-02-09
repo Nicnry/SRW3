@@ -6,7 +6,7 @@ SI-T1a
 
 ## Laboratoire 2
 
-LABO : Configuration de IIS
+LABO : Sécurité du serveur Web
 
 ## Exercice 1
 
