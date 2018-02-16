@@ -1,0 +1,43 @@
+laboratoire 2 : Configuration IIS (Correction)
+Exercice 2
+Nom : « Site02 du Module SRW »
+ID : 32
+Répertoire de publication : C:\SRW\Site02
+Liaison : http://*:8888
+appcmd add site /name:"Site02 du module SRW" /id:32 /physicalPath:"c:\SRW\Site02" /bindings:http:/*:8880:
+
+Page par défaut unique : indexsite02.html
+appcmd set config "Site02 du module SRW" /section:defaultDocument /+files.[value='indexsite02.html']
+
+Autoriser l'indexation des répertoires
+appcmd set config "Site02 du module SRW" /section:directoryBrowse /enabled:true
+
+http://localhost:8888/test2/ pointant sur le répertoire C:\SRW\repvirtuel
+appcmd add vdir /app.name:"Site02 du module SRW/" /path:/test2 /physicalPath:"c:\SRW\repvirtuel"
+
+Exercice 4
+Utilisez Appcmd.exe pour
+
+Affichez la liste des sites disponible sur votre serveur
+appcmd list sites
+
+Afficher la liste des sites écoutant le port 8080
+appcmd list sites /bindings:http/*:8080:
+
+Arrêtez le site écoutant le port 8080:
+appcmd list site /bindings:http/*:8080: /xml | appcmd stop site /in
+
+Démarrez le site écoutant le port 8080
+appcmd list site /bindings:http/*:8080: /xml | appcmd start site /in
+
+Supprimer le répertoire virtuel « test1 »du site01
+appcmd delete vdir /vdir.name:"Site01 du module SRW/test1"
+
+Effectuez une sauvegarde de la configuration de IIS
+appcmd add backup monbackup
+
+Supprimer le site02 présent sur votre serveur
+appcmd delete site "Site02 du module SRW"
+
+Restaurez votre sauvegarde précédente de la configuration de IIS
+appcmd restore backup monbackup
