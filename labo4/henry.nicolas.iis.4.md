@@ -4,83 +4,52 @@ Henry Nicolas
 
 SI-T1a
 
-## Laboratoire 2
+## Laboratoire 4
 
 LABO : Mise en place d'un service Internet et Intranet
 
 ## Exercice 1
 
-- Créer un dossier "SRW" dans le répertoire "C:\".
-- Créer un dossier "Site01" et "repvirtuel" dans votre dossier "SRW".
-- Dans le dossier "Site01" créer un fichier "indexsite01.html".
-- Dans le dossier "repvirtuel" créer un fichier "indexvirtuel.html".
-- Créer un site dans votre Gestionnaire des services Internet (IIS) se nommant "Site01 du Module SRW" qui sera sur "C:/SRW/Site01" et qui utilise comme port 8080.
-- Allez dans les paramètres avancé puis changez l'ID en 31.
-- Allez dans les documents par defauts et supprimez tout les documents puis rajoutez un dont le nom sera "indexsite01.html".
-- Allez dans "Navigation dans le répertoire" et activez dans les actions dans le menu de droite.
-- Clique droit sur votre site et ajouter un répertoire virtuel.
-- Dans "Alias" écrivez test1 et dans "Path" le dossier sur lequel vous pointerez "C:/SRW/repvirtuel".
+L’entreprise DUPONT vient de faire l’acquisition d’un nouveau serveur dans le but d’héberger les sites INTERNET et INTRANET de l’entreprise. L’entreprise DUPONT ne possède pas encore une gestion centralisée des comptes utilisateurs, la gestion des utilisateurs se fera en local à partir du serveur IIS.
+
+Technologies à utiliser --> Windows Web Server IIS
+
+M. Dupont, patron de cette entreprise, vous expose sa vision des choses :
+
+"Je désire installer un site INTERNET et INTRANET au sein de mon entreprise. Chaque employé de mon entreprise doit pouvoir accéder aux pages générales de l'INTRANET ainsi qu’à une section privée qui lui est réservée. Il doit aussi pouvoir accéder par la page principale de l'INTRANET à la page principale du site INTERNET et vice versa. Pour accéder à l'INTRANET depuis le réseau de mon entreprise, je ne veux pas avoir besoin de m’identifier sauf pour atteindre ma section privée. Depuis l’extérieur, le site INTERNET doit être accessible à tout le monde. Il doit être aussi possible depuis le site INTERNET, si l’on est un employé de mon entreprise, d’atteindre le site INTRANET après une demande d'authentification. Une section privée dclient unique du site INTERNET doit être réservée à mes clients. Un nom d'utilisateur LOGIN et un mot de passe générique seront utilisés par tous mes clients pour accéder à cette section. Cette section dclient privée doit aussi être accessible à tous mes ingénieurs par leur identifiant personnel. Les ingénieurs de mon entreprise ne doivent pas avoir les droits d'administrer le serveur ni le service IIS mais doivent pouvoir administrer les sites INTERNET et INTRANET."
+
+Pour réaliser ce TP, vous allez configurer votre machine virtuelle avec deux interfaces réseau, la première (@IP1) configurée en BRIDGE, la seconde (@IP2) en NAT. L'adressage des deux interfaces se statique.
+
+    @IP1  -->  Bridge -->  IP CPNV   -->  172.17...  -->  WAN
+    @IP2  -->  NAT    -->  IP VMWARE -->  192.168... -->  LAN
+Liste des employés de l’entreprise DUPONT
+
+    | Nom     | Prénom | Fonction  | Login   | Password     |
+    |---------|--------|-----------|---------|--------------|
+    | DUPONT  | Marcel | Directeur | mdupont | Qwertz123456 |
+    | BRICOT  | Juda   | Ingénieur | jbricot | Asdfgh123456 |
+    | ASSAIN  | Marc   | Comptable | massain | Yxcvbn123456 |
+    | DEUF    | John   | Ingénieur | jdeuf   | Qaywsx123456 |
+    | DIOCY   | Kelly  | Ingénieur | kdiocy  | Edcrfv123456 |
+    | Clients |        |           | dclient | Tgbzhn123456 |
 
 <div style="page-break-after: always;"></div>
 
 ## Exercice 2
 
-- Créer un dossier "Site02" dans votre dossier "SRW".
-- Dans le dossier "Site02" créer un fichier "indexsite02.html".
-- Ouvrez votre cmd en admin et placez vous dans "C:\Windows\System32\inetsrv".
-- Lancez la commande "appcmd add site /name:"Site02 du Module SRW" /id:32 /physicalPath:C:\SRW\Site02 /bindings:http/*:8888:"
-- Lancez la commande "appcmd set config "Site02 du Module SRW" /section:defaultDocument /~files" pour retirer tout les fichiers de Default Documents
-- Lancez la commande "appcmd set config "Site02 du Module SRW" /section:defaultDocument /+files.[value='indexsite02.html']" pour rajouter le fichier dans les Default Documents.
-- Lancez la commande "appcmd add vdir /app.name:"Site02 du Module SRW/" /path:/test2 /physicalPath:C:\SRW\repvirtuel" pour créer votre répertoire virtuel. 
-- Lancez la commande "appcmd set config "Site02 du Module SRW" /section:directoryBrowse /enabled:true" pour autoriser l'exploration de répertoire.
-- Dans le "Windows Firewall with Advanced Security" Ajoutez une règle pour le port 8888.
-- Redemarrez votre site avec "appcmd start sites "Site02 du Module SRW".
+La sécurité est un élément extrêmement important, surtout dans un environnement tel que celui d’Internet. Les informations qui circulent entre un ordinateur client et un serveur Web sont souvent confidentielles (mot de passe, numéro de carte de crédit, etc.). Si ces informations ne sont pas sécurisées, elles peuvent être interceptées par n’importe qui, ce qui est fortement dommageable.
 
-<div style="page-break-after: always;"></div>
+Sur les sites Intranet et Internet, de nombreux répertoires ne sont accessibles qu’à partir du moment où l’utilisateur a fourni ses identifiants. La vérification de la validité des identifiants saisis est effectuée avec l’authentification de base. Cette dernière présente l’avantage d’être compatible avec la majorité des navigateurs. Son gros inconvénient vient du fait que les informations saisies par l’utilisateur transitent en clair sur le réseau. N’importe qui, muni d’un logiciel spécial (sniffers), peut facilement les intercepter et ainsi usurper l’identité de l’utilisateur. L’authentification de base doit donc être couplée avec le protocole SSL (Secure Socket Layer). Ce dernier permet de sécuriser les transactions sur Internet entre un client et un serveur. Le protocole HTTP a été modifié pour supporter SSL et a pris l’acronyme HTTPS (Hypertext Transfer Protocol Secure sockets).
 
-## Exercice 3
+Lorsque l’utilisateur se connecte à un serveur sécurisé, ce dernier va lui envoyer un certificat, lequel est une sorte de pièce d’identité (nom de l’entreprise ou de l’établissement, adresse, etc.). Le navigateur Internet de l’utilisateur va dès lors vérifier la validité du certificat, qui doit être certifié par une autorité compétente. Si le certificat s’avère être invalide, le navigateur n’affichera pas le contenu demandé et indiquera à l’utilisateur que l’accès au site présente un risque. Libre à lui de poursuivre le chargement du contenu ou de quitter. L’utilisation d’un certificat est nécessaire pour implémenter SSL.
 
-- Créer un dossier "Site03" dans votre dossier "SRW".
-- Dans le dossier "Site03" créer un fichier "indexsite03.html".
-- Allez dans "C:\Windows\System32\inetsrv\config" et ouvrez "applicationHost.config"
-- Ajoutez :
-```xml
-<site name="Site03 du Module SRW" id="33" serverAutoStart="true">
-    <application path="/">
-        <virtualDirectory path="/" physicalPath="C:\SRW\Site03" />
-        <virtualDirectory path="/test2" physicalPath="C:\SRW\repvirtuel" />
-    </application>
-    <bindings>
-        <binding protocol="http" bindingInformation="*:8880:" />
-    </bindings>
-</site>
-```
+Deux solutions sont dès lors envisageables :
 
-- Dans votre dossier "C:\SRW\Site03" créer un fichier web.config contenant 
+Certificat signé par un organisme de certifications sont nécessaires lorsqu'il s'agit d'assurer la sécurité des échanges avec des utilisateurs anonymes, par exemple dans le cas d'un site Web.
+Certificat autosigné sont des certificats à usage interne. Signé par un serveur local, ce type de certificat permet de garantir la confidentialité des échanges au sein d'une organisation, par exemple pour le besoin d'un intranet.
+Le contenu du site INTERNET et INTRANET nécessitant une authentification pour y accéder est réservé à des utilisateurs connus (clients de l’entreprise et employés). Il est donc inutile de mettre en place un certificat signé par un organisme de certification. Toutefois, étant donné que les utilisateurs doivent saisir leurs identifiants personnels pour accéder à ce contenu, il est impératif de mettre en place un système de transaction sécurisée. L’utilisation d’un certificat autosigné est donc la solution idéale.
 
-```xml
-<site name="Site03 du Module SRW" id="33" serverAutoStart="true">
-    <application path="/">
-        <virtualDirectory path="/" physicalPath="C:\SRW\Site03" />
-        <virtualDirectory path="/test3" physicalPath="C:\SRW\repvirtuel" />
-    </application>
-    <bindings>
-        <binding protocol="http" bindingInformation="*:8880:" />
-    </bindings>
-</site>
-```
+Le cryptage sera utilisé dans deux cas :
 
-- Dans le "Windows Firewall with Advanced Security" Ajoutez une règle pour le port 8880.
-
-<div style="page-break-after: always;"></div>
-
-## Exercice 4
-
-- Pour afficher vos sites disponibles, faites "appcmd list site".
-- Pour trouver les sites écoutant le port 8080 : "appcmd list site /bindings:http/*:8080:".
-- Pour stopper les sites écoutant le port 8080 : "appcmd list site /xml /bindings:http/*:8080: | appcmd stop site /in"
-- Pour démarrer un site écoutant le port 8080 :  "appcmd list site /xml /bindings:http/*:8080: | appcmd start site /in"
-- Pour supprimer le répertoire virtuel « test1 »du site01 : "appcmd delete vdir "Site01 du Module SRW/test1"".
-- Pour effectuez une sauvegarde de la configuration de IIS : "appcmd add backup "Backup iis site02""
-- Pour supprimer le site02 présent sur votre serveur : "appcmd delete site "Site02 du Module SRW""
-- Pour restaurez votre sauvegarde précédente de la configuration de IIS : "appcmd restore backup "My Backup Name""
+lorsque l’utilisateur doit saisir des identifiants personnels pour accéder à un répertoire du site (authentification de base)
+lorsque les identifiants personnels de l’utilisateur sont utilisés pour lui permettre d’accéder à un répertoire du site (authentification Windows)
