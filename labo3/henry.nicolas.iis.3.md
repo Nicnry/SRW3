@@ -69,14 +69,14 @@ LABO : Configurer la sécurité du serveur Web sous IIS
 
 ### Tests configuration anonyme
 
-- Essayez de se connecter au site et 
+- Essayez de se connecter au site normalement, tout devrait fonctionner.
+- Essayez d'aller dans "/public", la page devrait s'afficher.
+- Allez dans "/private", le serveur vous refuse.
 
 ### Tests configuration final
 
-Créez un nouveau compte local dans l'AD
-Nom : SRW_private
-Mot de passe : Qwertz123456
-En utilisant l'authentification Windows et digest faites en sorte que seul l'utilisateur SRW_private puisse accéder à http://votresite/private
-En vous connectant avec l'utilisateur SRW_private (nouvel session Windows) tester l’accès à http://votresite/private en utilisant IExplorer (authentification Windows)
-En vous connectant avec l'utilisateur SRW_private (nouvel session Windows) tester l’accès à http://votresite/private en utilisant l'authentification de digest
-Testez le bon fonctionnement de votre configuration (Décrivez les tests que vous avez effectués)
+- Allez dans votre AD, selectionnez votre utilisateur et faites clique droite, "Add to a group...".
+- Ajoutez lui le rôles "administrators".
+- Connectez vous à votre utilisateur "SRW_private".
+- Activez uniquement la "windows Authentication" puis allez sur "/private", aucune authentification n'est demandée.
+- Activez uniquement la "Digest Authentication" puis allez sur "/private", il vous demande vos accès et vous affiche la ressource demandée.
