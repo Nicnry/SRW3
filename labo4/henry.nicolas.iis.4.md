@@ -13,14 +13,14 @@ LABO : Mise en place d'un service Internet et Intranet
 - Allez dans les paramètres de votre machine virtuel, lui ajouter une carte réseau en bridge et vérifier son IP avec le bon vieux "ipconfig".
 - Allez dans votre Active Directory et ajouter 4 groupes et 6 utilisateurs avec ces informations:
     
-    | Nom     | Prénom | Fonction  | Login   | Password     |
-    |---------|--------|-----------|---------|--------------|
-    | DUPONT  | Marcel | Directeur | mdupont | Qwertz123456 |
-    | BRICOT  | Juda   | Ingénieur | jbricot | Asdfgh123456 |
-    | ASSAIN  | Marc   | Comptable | massain | Yxcvbn123456 |
-    | DEUF    | John   | Ingénieur | jdeuf   | Qaywsx123456 |
-    | DIOCY   | Kelly  | Ingénieur | kdiocy  | Edcrfv123456 |
-    | Clients |        |           | dclient | Tgbzhn123456 |
+| Nom     | Prénom | Fonction  | Login   | Password     |
+|---------|--------|-----------|---------|--------------|
+| DUPONT  | Marcel | Directeur | mdupont | Qwertz123456 |
+| BRICOT  | Juda   | Ingénieur | jbricot | Asdfgh123456 |
+| ASSAIN  | Marc   | Comptable | massain | Yxcvbn123456 |
+| DEUF    | John   | Ingénieur | jdeuf   | Qaywsx123456 |
+| DIOCY   | Kelly  | Ingénieur | kdiocy  | Edcrfv123456 |
+| Clients |        |           | dclient | Tgbzhn123456 |
 
 - Créez un dossier "www" à la racine de "C:\\\\".
 - Créez un dossier "internet" et "intranet" dans "www" avec un fichier "index.html" dans les dossiers.
@@ -46,7 +46,7 @@ LABO : Mise en place d'un service Internet et Intranet
             - "Authorization Rules" -> Supprimer "All Users" et ajouter "User->jbricot".
         - Effectuer la même oppération pour chaques utilisateurs.
 
-
+<div style="page-break-after: always;"></div>
 
 L’entreprise DUPONT vient de faire l’acquisition d’un nouveau serveur dans le but d’héberger les sites INTERNET et INTRANET de l’entreprise. L’entreprise DUPONT ne possède pas encore une gestion centralisée des comptes utilisateurs, la gestion des utilisateurs se fera en local à partir du serveur IIS.
 
