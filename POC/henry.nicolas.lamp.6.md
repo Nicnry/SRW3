@@ -100,7 +100,7 @@ Dans le fichier `/etc/apache2/sites-available/internet.conf` :
 </VirtualHost>
 ```
 
-Dans le fichier `/var/www/intranet/dclient/.htaccess` :
+Dans le fichier `/var/www/internet/dclient/.htaccess` :
 
 ```
 AuthName "@tp.com"
@@ -112,7 +112,7 @@ Require group customers engineers
 Satisfy All
 ```
 
-Dans le fichier `/etc/apache2/sites-available/internet.conf` :
+Dans le fichier `/etc/apache2/sites-available/intranet.conf` :
 
 ```
 <VirtualHost 192.168.106.128:80>
