@@ -1,6 +1,3 @@
-172.17.100.168
-192.168.106.128
-
 # Cours SRW3
 
 Henry Nicolas
@@ -194,7 +191,7 @@ Deny from All
 Satisfy All
 ```
 
-Pour chaques utilisateurs créer `/var/www/intranet/private/users/USERNAME/.htaccess` :
+Pour chaques utilisateurs créer `/var/www/intranet/users/USERNAME/.htaccess` :
 
 ```
 AuthName "@tp.com"
